@@ -20,10 +20,16 @@ Environment = "%(quoted_environment)s"
 Arguments = "%(quoted_arguments)s"
 Executable = %(executable)s
 
+output                  = job.out
+error                   = job.err
+log                     = job.log
+
+
++OWNER="condor"
 Queue
 """.lstrip()
 
-    submit_command = "condor_submit"
+    submit_command = "condor_submit -spool"
     cancel_command = "condor_rm"
     job_id_regexp = r"(?P<job_id>\d+\.\d+)"
 
@@ -121,6 +127,7 @@ Queue
             "quoted_environment": quoted_environment,
             "quoted_arguments": quoted_arguments,
             "executable": self.executable,
+            "OWNER": 'condor',
         }
 
     def _job_id_from_submit_output(self, out):

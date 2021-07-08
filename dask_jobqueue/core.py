@@ -240,7 +240,8 @@ class Job(ProcessInterface, abc.ABC):
         dask_worker_command = "%(python)s -m distributed.cli.dask_worker" % dict(
             python=python
         )
-        command_args = [dask_worker_command, self.scheduler]
+        #command_args = [dask_worker_command, self.scheduler]
+        command_args = [dask_worker_command, 'tcp://10.111.73.1:42879']
         command_args += ["--nthreads", self.worker_process_threads]
         if processes is not None and processes > 1:
             command_args += ["--nprocs", processes]
